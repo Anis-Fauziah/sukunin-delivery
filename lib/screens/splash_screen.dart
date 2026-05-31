@@ -1,6 +1,8 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
 import 'login_screen.dart';
+import '../services/session_service.dart';
+import 'home_screen.dart';
 
 class SplashScreen extends StatefulWidget {
   const SplashScreen({super.key});
@@ -13,23 +15,34 @@ class SplashScreen extends StatefulWidget {
 class _SplashScreenState
     extends State<SplashScreen> {
 
+
   @override
   void initState() {
     super.initState();
-
     Timer(
       const Duration(seconds: 3),
-      () {
-        Navigator.pushReplacement(
-          context,
-          MaterialPageRoute(
-            builder: (_) =>
-                const LoginScreen(),
-          ),
-        );
-      },
+      checkLogin,
     );
   }
+
+    Future<void> checkLogin() async {
+
+  bool isLogin =
+      await SessionService.isLogin();
+
+  if (!mounted) return;
+
+  Navigator.pushReplacement(
+    context,
+    MaterialPageRoute(
+      builder:
+          (_) =>
+              isLogin
+                  ? const HomeScreen()
+                  : const LoginScreen(),
+    ),
+  );
+}
 
   @override
   Widget build(BuildContext context) {
