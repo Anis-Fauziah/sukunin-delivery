@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'screens/login_screen.dart';
 
 void main() {
   runApp(const MyApp());
@@ -12,20 +13,7 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       title: 'Sukunin Delivery',
-      home: Scaffold(
-        appBar: AppBar(
-          title: const Text('Sukunin Delivery'),
-        ),
-        body: const Center(
-          child: Text(
-            'Project Sukunin Delivery',
-            style: TextStyle(
-              fontSize: 22,
-              fontWeight: FontWeight.bold,
-            ),
-          ),
-        ),
-      ),
+      home: const LoginScreen(),
     );
   }
 }
