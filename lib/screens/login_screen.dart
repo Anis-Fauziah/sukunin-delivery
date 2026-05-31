@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'register_screen.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
@@ -123,7 +124,15 @@ class _LoginScreenState
             ),
 
             TextButton(
-              onPressed: () {},
+              onPressed: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) =>
+                        const RegisterScreen(),
+                  ),
+                );
+              },
 
               child: const Text(
                 'Belum punya akun? Register',
