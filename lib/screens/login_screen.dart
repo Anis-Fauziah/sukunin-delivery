@@ -11,6 +11,42 @@ class LoginScreen extends StatefulWidget {
 
 class _LoginScreenState
     extends State<LoginScreen> {
+      void loginValidation() {
+
+  if (emailController.text.trim().isEmpty) {
+
+    ScaffoldMessenger.of(context).showSnackBar(
+      const SnackBar(
+        content: Text(
+          'Email tidak boleh kosong',
+        ),
+      ),
+    );
+
+    return;
+  }
+
+  if (passwordController.text.trim().isEmpty) {
+
+    ScaffoldMessenger.of(context).showSnackBar(
+      const SnackBar(
+        content: Text(
+          'Password tidak boleh kosong',
+        ),
+      ),
+    );
+
+    return;
+  }
+
+  ScaffoldMessenger.of(context).showSnackBar(
+    const SnackBar(
+      content: Text(
+        'Validasi berhasil',
+      ),
+    ),
+  );
+}
 
   final TextEditingController
       emailController =
@@ -114,7 +150,7 @@ class _LoginScreenState
 
               child:
                   ElevatedButton(
-                onPressed: () {},
+                onPressed: loginValidation,
 
                 child:
                     const Text(
