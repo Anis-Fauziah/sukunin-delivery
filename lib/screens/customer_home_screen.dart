@@ -6,6 +6,7 @@ import '../providers/product_provider.dart';
 import 'product_detail_screen.dart';
 import 'cart_screen.dart';
 import 'order_page.dart';
+import 'profile_screen.dart';
 
 class CustomerHomeScreen extends StatefulWidget {
 const CustomerHomeScreen({super.key});
@@ -20,6 +21,8 @@ extends State<CustomerHomeScreen> {
 
 int _selectedIndex = 0;
 
+String searchQuery = '';
+
 void _onItemTapped(int index) {
 
 if (index == 1) {
@@ -31,6 +34,19 @@ if (index == 1) {
           const OrderPage(),
     ),
   );
+
+  return;
+  }
+
+  if (index == 2) {
+
+    Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (_) =>
+            const ProfileScreen(),
+      ),
+    );
 
   return;
 }
@@ -61,6 +77,17 @@ final productProvider =
     Provider.of<ProductProvider>(
   context,
 );
+
+final filteredProducts =
+    productProvider.products
+        .where((product) {
+
+  return product['flavor']
+      .toString()
+      .toLowerCase()
+      .contains(searchQuery);
+
+}).toList();
 
 return Scaffold(
   backgroundColor:
@@ -145,6 +172,14 @@ return Scaffold(
                 ),
 
                 child: TextField(
+                  onChanged: (value) {
+
+                    setState(() {
+                      searchQuery =
+                          value.toLowerCase();
+                    });
+                  },
+
                   decoration:
                       InputDecoration(
                     hintText:
@@ -298,16 +333,13 @@ return Scaffold(
                     const NeverScrollableScrollPhysics(),
 
                 itemCount:
-                    productProvider
-                        .products
-                        .length,
+                    filteredProducts.length,
 
                 itemBuilder:
                     (context, index) {
 
                   final product =
-                      productProvider
-                          .products[index];
+                       filteredProducts[index];
 
                   return Container(
                     margin:
