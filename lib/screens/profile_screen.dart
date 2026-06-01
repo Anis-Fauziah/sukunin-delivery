@@ -1,10 +1,56 @@
 import 'package:flutter/material.dart';
+import 'edit_profile_screen.dart';
 
-class ProfileScreen extends StatelessWidget {
+class ProfileScreen extends StatefulWidget {
   const ProfileScreen({super.key});
 
   @override
+  State<ProfileScreen> createState() =>
+      _ProfileScreenState();
+}
+
+class _ProfileScreenState
+    extends State<ProfileScreen> {
+
+  String nama = 'Niss';
+  String email = 'user@gmail.com';
+  String phone = '081234567890';
+  String alamat =
+      'Tasikmalaya, Jawa Barat';
+
+  Future<void> editProfil() async {
+
+    final result =
+        await Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (_) =>
+            const EditProfileScreen(),
+      ),
+    );
+
+    if (result != null) {
+
+      setState(() {
+
+        nama =
+            result['nama'];
+
+        email =
+            result['email'];
+
+        phone =
+            result['phone'];
+
+        alamat =
+            result['alamat'];
+      });
+    }
+  }
+
+  @override
   Widget build(BuildContext context) {
+
     return Scaffold(
       backgroundColor:
           const Color(0xFFF5F6F8),
@@ -42,9 +88,10 @@ class ProfileScreen extends StatelessWidget {
               height: 15,
             ),
 
-            const Text(
-              'Niss',
-              style: TextStyle(
+            Text(
+              nama,
+              style:
+                  const TextStyle(
                 fontSize: 22,
                 fontWeight:
                     FontWeight.bold,
@@ -55,9 +102,10 @@ class ProfileScreen extends StatelessWidget {
               height: 5,
             ),
 
-            const Text(
-              'user@gmail.com',
-              style: TextStyle(
+            Text(
+              email,
+              style:
+                  const TextStyle(
                 color: Colors.grey,
               ),
             ),
@@ -74,15 +122,20 @@ class ProfileScreen extends StatelessWidget {
                         12),
               ),
 
-              child: const ListTile(
-                leading: Icon(
+              child: ListTile(
+                leading:
+                    const Icon(
                   Icons.person,
                 ),
-                title: Text(
+
+                title:
+                    const Text(
                   'Nama Lengkap',
                 ),
-                subtitle: Text(
-                  'Niss',
+
+                subtitle:
+                    Text(
+                  nama,
                 ),
               ),
             ),
@@ -99,15 +152,20 @@ class ProfileScreen extends StatelessWidget {
                         12),
               ),
 
-              child: const ListTile(
-                leading: Icon(
+              child: ListTile(
+                leading:
+                    const Icon(
                   Icons.email,
                 ),
-                title: Text(
+
+                title:
+                    const Text(
                   'Email',
                 ),
-                subtitle: Text(
-                  'user@gmail.com',
+
+                subtitle:
+                    Text(
+                  email,
                 ),
               ),
             ),
@@ -124,15 +182,20 @@ class ProfileScreen extends StatelessWidget {
                         12),
               ),
 
-              child: const ListTile(
-                leading: Icon(
+              child: ListTile(
+                leading:
+                    const Icon(
                   Icons.phone,
                 ),
-                title: Text(
+
+                title:
+                    const Text(
                   'Nomor HP',
                 ),
-                subtitle: Text(
-                  '081234567890',
+
+                subtitle:
+                    Text(
+                  phone,
                 ),
               ),
             ),
@@ -149,15 +212,20 @@ class ProfileScreen extends StatelessWidget {
                         12),
               ),
 
-              child: const ListTile(
-                leading: Icon(
+              child: ListTile(
+                leading:
+                    const Icon(
                   Icons.location_on,
                 ),
-                title: Text(
+
+                title:
+                    const Text(
                   'Alamat',
                 ),
-                subtitle: Text(
-                  'Tasikmalaya, Jawa Barat',
+
+                subtitle:
+                    Text(
+                  alamat,
                 ),
               ),
             ),
@@ -171,14 +239,18 @@ class ProfileScreen extends StatelessWidget {
                   double.infinity,
               height: 50,
 
-              child: ElevatedButton.icon(
-                onPressed: () {},
+              child:
+                  ElevatedButton.icon(
+                onPressed:
+                    editProfil,
 
-                icon: const Icon(
+                icon:
+                    const Icon(
                   Icons.edit,
                 ),
 
-                label: const Text(
+                label:
+                    const Text(
                   'Edit Profil',
                 ),
               ),
@@ -193,17 +265,70 @@ class ProfileScreen extends StatelessWidget {
                   double.infinity,
               height: 50,
 
-              child: ElevatedButton.icon(
+              child:
+                  ElevatedButton.icon(
                 onPressed: () {
 
-                  ScaffoldMessenger.of(
-                    context,
-                  ).showSnackBar(
-                    const SnackBar(
-                      content: Text(
-                        'Fitur logout akan dibuat setelah login selesai',
-                      ),
-                    ),
+                  showDialog(
+                    context:
+                        context,
+
+                    builder:
+                        (context) {
+
+                      return AlertDialog(
+                        title:
+                            const Text(
+                          'Logout',
+                        ),
+
+                        content:
+                            const Text(
+                          'Yakin ingin logout?',
+                        ),
+
+                        actions: [
+
+                          TextButton(
+                            onPressed:
+                                () {
+                              Navigator.pop(
+                                  context);
+                            },
+
+                            child:
+                                const Text(
+                              'Batal',
+                            ),
+                          ),
+
+                          ElevatedButton(
+                            onPressed:
+                                () {
+
+                              Navigator.pop(
+                                  context);
+
+                              ScaffoldMessenger.of(
+                                      context)
+                                  .showSnackBar(
+                                const SnackBar(
+                                  content:
+                                      Text(
+                                    'Fitur login belum dibuat',
+                                  ),
+                                ),
+                              );
+                            },
+
+                            child:
+                                const Text(
+                              'Logout',
+                            ),
+                          ),
+                        ],
+                      );
+                    },
                   );
                 },
 
@@ -215,11 +340,13 @@ class ProfileScreen extends StatelessWidget {
                       Colors.white,
                 ),
 
-                icon: const Icon(
+                icon:
+                    const Icon(
                   Icons.logout,
                 ),
 
-                label: const Text(
+                label:
+                    const Text(
                   'Logout',
                 ),
               ),

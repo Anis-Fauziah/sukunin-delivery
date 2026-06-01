@@ -7,6 +7,7 @@ import 'product_detail_screen.dart';
 import 'cart_screen.dart';
 import 'order_page.dart';
 import 'profile_screen.dart';
+import 'notification_screen.dart';
 
 class CustomerHomeScreen extends StatefulWidget {
 const CustomerHomeScreen({super.key});
@@ -120,33 +121,42 @@ return Scaffold(
 
     actions: [
 
-      IconButton(
-        onPressed: () {},
+  IconButton(
+    onPressed: () {
 
-        icon: const Icon(
-          Icons.notifications_none,
-          color: Colors.black,
+      Navigator.push(
+        context,
+        MaterialPageRoute(
+          builder: (_) =>
+              const NotificationScreen(),
         ),
-      ),
+      );
+    },
 
-      IconButton(
-        onPressed: () {
+    icon: const Icon(
+      Icons.notifications_none,
+      color: Colors.black,
+    ),
+  ),
 
-          Navigator.push(
-            context,
-            MaterialPageRoute(
-              builder: (_) =>
-                  const CartScreen(),
-            ),
-          );
-        },
+  IconButton(
+    onPressed: () {
 
-        icon: const Icon(
-          Icons.shopping_cart_outlined,
-          color: Colors.black,
+      Navigator.push(
+        context,
+        MaterialPageRoute(
+          builder: (_) =>
+              const CartScreen(),
         ),
-      ),
-    ],
+      );
+    },
+
+    icon: const Icon(
+      Icons.shopping_cart_outlined,
+      color: Colors.black,
+    ),
+  ),
+],
   ),
 
   body: productProvider.isLoading
