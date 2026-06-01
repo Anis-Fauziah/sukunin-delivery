@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import '../providers/product_provider.dart';
-import 'package:intl/intl.dart';
+import 'product_detail_screen.dart';
+import 'cart_screen.dart';
 
 class CustomerHomeScreen extends StatefulWidget {
   const CustomerHomeScreen({super.key});
@@ -18,6 +19,7 @@ void _onItemTapped(int index) {
     _selectedIndex = index;
   });
 }
+
   @override
   void initState() {
     super.initState();
@@ -54,7 +56,14 @@ void _onItemTapped(int index) {
             icon: const Icon(Icons.notifications_none, color: Colors.black),
           ),
           IconButton(
-            onPressed: () {},
+            onPressed: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => const CartScreen(),
+                ),
+              );
+            },
             icon: const Icon(Icons.shopping_cart_outlined, color: Colors.black),
           ),
         ],
@@ -142,25 +151,10 @@ void _onItemTapped(int index) {
         MainAxisAlignment.spaceBetween,
     children: [
       const Text(
-        'Produk Terlaris',
+        '10 Varian Rasa',
         style: TextStyle(
           fontSize: 20,
           fontWeight: FontWeight.bold,
-        ),
-      ),
-
-      TextButton(
-        onPressed: () {
-          setState(() {
-            _selectedIndex = 1;
-          });
-        },
-        child: const Text(
-          'Lihat Semua',
-          style: TextStyle(
-            fontWeight: FontWeight.bold,
-            color: Colors.green,
-          ),
         ),
       ),
     ],
@@ -170,9 +164,7 @@ void _onItemTapped(int index) {
                   ListView.builder(
                     shrinkWrap: true,
                     physics: const NeverScrollableScrollPhysics(),
-                    itemCount: productProvider.products.length > 4
-                    ? 4
-                    : productProvider.products.length,
+                    itemCount: productProvider.products.length,
                     itemBuilder: (context, index) {
                       final product = productProvider.products[index];
 
@@ -212,29 +204,24 @@ void _onItemTapped(int index) {
                                     maxLines: 2,
                                     overflow: TextOverflow.ellipsis,
                                   ),
-                                  const SizedBox(height: 8),
-                                  Text(
-                                     NumberFormat.currency(
-                                    locale: 'id_ID',
-                                    symbol: 'Rp ',
-                                    decimalDigits: 0,
-                                  ).format(
-                                    double.parse(
-                                      product['harga_mulai'].toString(),
-                                    ),
-                                  ),
-                                  style: const TextStyle(
-                                    color: Colors.green,
-                                    fontWeight: FontWeight.bold,
-                                    fontSize: 16,
-                                    ),
-                                  ),
-                                  const SizedBox(height: 8),
+                                  
                                   SizedBox(
                                     width: double.infinity,
                                     child: ElevatedButton(
-                                      onPressed: () {},
-                                      child: const Text('Pesan Sekarang'),
+                                      onPressed: () {
+                                        Navigator.push(
+                                          context,
+                                          MaterialPageRoute(
+                                            builder: (_) =>
+                                                ProductDetailScreen(
+                                              product: product,
+                                            ),
+                                          ),
+                                        );
+                                      },
+                                      child: const Text(
+                                        'Pesan Sekarang',
+                                      ),
                                     ),
                                   )
                                 ],
@@ -270,10 +257,6 @@ void _onItemTapped(int index) {
     BottomNavigationBarItem(
       icon: Icon(Icons.home_rounded),
       label: 'Beranda',
-    ),
-    BottomNavigationBarItem(
-      icon: Icon(Icons.shopping_bag_rounded),
-      label: 'Produk',
     ),
     BottomNavigationBarItem(
       icon: Icon(Icons.receipt_long_rounded),

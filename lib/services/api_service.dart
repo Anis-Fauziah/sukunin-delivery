@@ -20,4 +20,20 @@ class ApiService {
       response.body,
     );
   }
+
+  static Future<List<dynamic>>
+    getProductSizes(
+        int productId) async {
+
+  final response =
+      await http.get(
+    Uri.parse(
+      '$baseUrl/get_product_sizes.php?product_id=$productId',
+    ),
+  );
+
+  return jsonDecode(
+    response.body,
+  );
+}
 }
